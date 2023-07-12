@@ -5,6 +5,8 @@ const indexControllers = require('../controllers');
 const whatsappHelper = require('../helper/whatsapp.js');
 
 router.get('/', indexControllers.Index);
-router.get('/whatsapp', whatsappHelper.WhatsApp);
+router.get('/whatsapp', whatsappHelper.WhatsApp, (req, res) => {
+    res.send("yes");
+});
 
 module.exports = router;
