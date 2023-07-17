@@ -1,11 +1,11 @@
 const { BufferJSON, WA_DEFAULT_EPHEMERAL, generateWAMessageFromContent, proto, generateWAMessageContent, generateWAMessage, prepareWAMessageMedia, areJidsSameUser, getContentType } = require('@adiwajshing/baileys')
 const fs = require('fs')
+require('dotenv').config()
 const util = require('util')
 const chalk = require('chalk')
 const { Configuration, OpenAIApi } = require("openai") 
 const BOT_NAME = process.env.BOT_NAME ?? "OpenAI";
-
-
+ 
 // let conversations = [
 //     {
 //       role: 'system',
