@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require("cors");
 const app = express();
+const PORT = process.env.PORT || 9000;
 
 const indexRoutes = require('./routes');
 
@@ -20,6 +21,6 @@ app.set("view engine", "ejs");
 
 app.use('/', indexRoutes);
 
-app.listen(9000, function(){
-  console.log('Server listening on port 9000')
+app.listen(PORT, function(){
+  console.log(`Server listening on port ${PORT}`);
 });
