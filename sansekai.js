@@ -156,7 +156,7 @@ module.exports = sansekai = async (client, m, chatUpdate, store) => {
                             m.reply(`${response.data.choices[0].text}\n\n`)
                         } catch (err) {
                             console.log(err)
-                            m.reply('Maaf, sepertinya ada yang error')
+                            m.reply('Maaf, sepertinya aada yang error')
                         }
                         break
                     default: {
