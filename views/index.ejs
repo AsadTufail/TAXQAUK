@@ -598,12 +598,12 @@
                                         <span class="price">5</span>
                                         <span class="sub">/Week</span>
                                     </p>
-                                    <a href="#"
-                                        class="appsLand-btn appsLand-btn-gradient btn-inverse btn-padding"><span>Subscribe
+                                    <a href="#" class="appsLand-btn appsLand-btn-gradient btn-inverse btn-padding" data-toggle="modal" data-target="#myModal"><span>Subscribe
                                             Now</span></a>
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="col-md-4 col-sm-6">
                             <div class="pricing-table wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.25s">
                                 <div class="pricing-price">
@@ -1327,7 +1327,7 @@
             <div class="container">
                 <div class="apps-short-info">
                     <a href="#">
-                        <img alt="" src="images/logo.png">
+                        <img alt="" src="images/logo-2.png">
                     </a>
                 </div>
                 <ul class="list-inline list-unstyled footer-social-links">
@@ -1343,11 +1343,55 @@
             <div class="container">
                 <p>All Rights Reserved © 2022 <a href="https://mrkayo.com/">TAXQ&AUK</a></p>
                 <p style="flex: auto;"></p>
-                <p><a href="/terms">Terms and conditions</a> | <a href="/privacy">Privacy Policy</a></p>
+                <p><a href="/terms-and-conditions">Terms and conditions</a> | <a href="/privacy-policy">Privacy Policy</a></p>
             </div>
         </div>
     </footer>
 
+
+    <!-- Payment Modal -->
+
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">        
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Enter your Details</h4>
+            </div>
+            <div class="modal-body">
+                <div class="account-details-form">   
+                    <div class="single-input-item">
+                        <label for="first-name" class="required">Name</label>
+                        <input class="form-control" type="text" id="name" name="name" placeholder="Enter Name">
+                    </div>
+                    <div class="single-input-item">
+                        <label for="display-name" class="required">Email</label>
+                        <input class="form-control" type="email" id="email" name="email" placeholder="Enter Email">
+                    </div>
+                    <div class="single-input-item">
+                        <label for="display-name" class="required">Phone</label>
+                        <input class="form-control" type="phone" id="email" name="phone" placeholder="Enter Phone Number">
+                    </div>
+                    <div class="single-input-item" hidden>
+                        <input id="paymentAmount" class="form-control" type="text" name="total" placeholder="amount">
+                    </div>
+                    <div class="single-input-item">
+                        <label for="email" class="required">Card Number</label>
+                        <div id="card-element" class="form-control p-2 h-10"></div>
+                    </div>
+                    <div class="single-input-item">
+                        <div id="card-errors" role="alert"></div>
+                    </div>                                                                    
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="appsLand-btn appsLand-btn-gradient" id="stripeBtn" type="submit"><span>Pay</span></button>
+            </div>
+          </div>
+          
+        </div>
+      </div>
 
     <!-- start the script -->
     <script src="js/jquery-2.2.4.min.js"></script>
@@ -1363,6 +1407,50 @@
     <script src="js/jquery.ajaxchimp.langs.min.js"></script>
     <script src="js/ajax.js"></script>
     <script src="js/main.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+    //   const stripe = Stripe('pk_live_51LFh3eLtNEjdr8jnw7cEZLkfb3S6DOOjbgeiHvA5XUgjY1sdBkDzUtlU7vgwrXCEyJYr3fcT27s11228lezMwkWg001B6LMinx'); // Your Publishable Key
+      const stripe = Stripe('pk_test_51LFh3eLtNEjdr8jnwRnmoK5N94zyeXwaxY4BkKrv1m7VA0zGTdXtbu4UCIYSpHbLCv6Aa2pH3w7IlDy3C42Hl1zy006YgUCh08'); // Your Publishable Key
+      const elements = stripe.elements();
+
+      // Create our card inputs
+      var style = {
+        base: {
+          color: "black"
+        }
+      };
+
+      const card = elements.create('card', { style });
+      card.mount('#card-element');
+
+      const form = document.querySelector('.paymentForm');
+      const errorEl = document.querySelector('#card-errors');
+
+      // Give our token to our form
+      const stripeTokenHandler = token => {
+        const hiddenInput = document.createElement('input');
+        hiddenInput.setAttribute('type', 'hidden');
+        hiddenInput.setAttribute('name', 'stripeToken');
+        hiddenInput.setAttribute('value', token.id);
+        form.appendChild(hiddenInput);
+        form.submit();
+      }
+
+      // Create token from card data
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        var img = document.getElementById("img")
+        img.style.display = 'block'
+        stripe.createToken(card).then(res => {
+          if (res.error){
+            var img = document.getElementById("img")
+            img.style.display = 'none'
+            errorEl.textContent = res.error.message;
+          } 
+          else stripeTokenHandler(res.token);
+        })
+      })
+    </script>
     <!-- end the script -->
 </body>
 

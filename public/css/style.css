@@ -84,6 +84,14 @@ p {
   line-height: 24px;
 }
 
+.modal button {
+  padding: 7px 30px;
+}
+
+.single-input-item {
+  margin: 10px 0px;
+}
+
 .mb_50 {
   margin-bottom: 50px !important;
 }
@@ -1974,6 +1982,21 @@ section#features div.desc h2 {
 #pricing,
 .faq {
   padding-top: 0px !important;
+}
+
+.terms p {
+  color: #000000;
+  font-size: 16px;
+}
+
+.terms u {
+  color: #333;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.terms p b {
+  color: #333;
 }
 
 .faq button {
