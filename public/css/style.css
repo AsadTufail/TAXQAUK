@@ -54,7 +54,7 @@ Last change:  25/10/2017
 /*-----------------
 
 $mainColor: #3483ff;
-$secColor: #cd0fd8;
+$secColor: #2398db;
 
 ------------------------------------------------------------------*/
 /* 2. General Style
@@ -111,20 +111,28 @@ p {
 .list-post .entry-content .entry-post-info h4 a:hover,
 .list-post .entry-content .entry-expert .post-readMore a.read-more-link,
 .apps-footer .footer-bottom p a {
-  color: #3483ff;
+  background-color: #2398db;
+  background-image: linear-gradient(150deg, #2398db 0%, #80D0C7 100%);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.footer-bottom .container {
+  display: flex;
+  justify-content: space-between;
 }
 
 .sec-color-bg,
 .appsLand-btn.appsLand-btn-pink,
 .appsLand-btn.appsLand-btn-pink.btn-rgba:hover {
-  background: #cd0fd8;
+  background: #2398db;
 }
 
 .sec-color-text,
 .normal-post .entry-content .entry-expert .post-readMore a:hover,
 .list-post .entry-content .entry-expert .post-readMore a:hover,
 .apps-footer .footer-bottom p a:hover {
-  color: #cd0fd8;
+  color: #2398db;
 }
 
 .gradient-text,
@@ -1243,7 +1251,7 @@ header.appsLand-header .app-overlay {
 }
 
 .pricing-text p {
-  line-height: 16px;
+  line-height: 24px;
   font-size: 16px;
   font-weight: 500;
   margin-top: 50px

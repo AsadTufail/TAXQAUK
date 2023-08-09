@@ -39,15 +39,15 @@
             <div class="app-links" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right appsLand-links">
                     <li class="visible-xs-block text-center mobile-size-logo">
-                        <a href="#">
+                        <a href="#home">
                             <img alt="" src="images/logo.png">
                         </a>
                     </li>
                     <li><a href="#home">Home</a></li>
-                    <li><a href="#features">How It Works</a></li>
-                    <li><a href="#download">Benefits</a></li>
+                    <li><a href="#works">How It Works</a></li>
+                    <li><a href="#benefits">Benefits</a></li>
                     <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#testimonials">FAQ</a></li>
+                    <li><a href="#faq">FAQ</a></li>
                     <li><a href="#contact">Contact</a></li>
                     <a href="https://wa.me/+923043600997?text=Hello" target="_blank"
                         class="appsLand-btn appsLand-btn-gradient btn-inverse scrollLink whatsapp-btn header-chat-btn">
@@ -326,7 +326,7 @@
 
         <!-- Features Section
     ========================================-->
-        <section class="features" id="features">
+        <section class="features" id="works">
             <div class="container">
                 <!-- <div class="section-title style-gradient wow fadeInUp" data-wow-duration="1s" data-wow-delay="0s">
                     <h2>
@@ -454,7 +454,7 @@
 
         <!-- Download Section
     ========================================-->
-        <section class="download section-bg-img" id="download">
+        <section class="download section-bg-img" id="benefits">
             <div class="app-overlay">
                 <div class="container">
                     <div class="section-title style-gradient white-color wow fadeInUp" data-wow-duration="1s"
@@ -537,7 +537,7 @@
 
         <!-- Pricing Section
     ========================================-->
-        <section class="features" id="features">
+        <section class="features" id="works">
             <div class="container">
                 <div class="appInfo-container">
                     <div class="row appInfo-row">
@@ -633,7 +633,7 @@
 
         <!-- Testimonials Section
     ========================================-->
-        <!-- <section class="testimonials section-bg-img" id="testimonials">
+        <!-- <section class="testimonials section-bg-img" id="faq">
             <div class="app-overlay">
                 <div class="container">
                     <div class="section-title style-gradient white-color wow fadeInUp" data-wow-duration="1s"
@@ -916,7 +916,7 @@
 
         <!-- FAQ Section
     ========================================-->
-        <section class="faq">
+        <section class="faq" id="faq">
             <div class="container">
                 <div class="section-title style-gradient wow fadeInUp" data-wow-duration="1s" data-wow-delay="0s">
                     <h2>
@@ -1060,7 +1060,7 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <button type="submit" name="submit_contact_form"
+                            <button type="submit" onclick="location='/questions'" name="submit_contact_form"
                                 class="appsLand-btn appsLand-btn-gradient btn">
                                 <span>See All</span>
                             </button>
@@ -1342,6 +1342,8 @@
         <div class="footer-bottom">
             <div class="container">
                 <p>All Rights Reserved © 2022 <a href="https://mrkayo.com/">TAXQ&AUK</a></p>
+                <p style="flex: auto;"></p>
+                <p><a href="/terms">Terms and conditions</a> | <a href="/privacy">Privacy Policy</a></p>
             </div>
         </div>
     </footer>
