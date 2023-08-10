@@ -27,7 +27,8 @@ const Payment = async (req, res) => {
             customer: customer.id,
           });
 
-        await User.findOneAndUpdate({phone: req.body.phone}, {payment: true, amount: req.body.amount});
+        let phoneNumber = req.body.phone.replace(/[^0-9]/g, "");
+        await User.findOneAndUpdate({phone: phoneNumber}, {payment: true, amount: req.body.amount});
         console.log(data.status);
         res.redirect("/");
 
