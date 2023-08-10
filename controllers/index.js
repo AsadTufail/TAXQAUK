@@ -27,9 +27,9 @@ const Payment = async (req, res) => {
             customer: customer.id,
           });
 
-          console.log(data.status);
-          await User.findOneAndUpdate({phone: req.body.phone}, {payment: true, amount: req.body.amount});
-          res.redirect("/");
+        await User.findOneAndUpdate({phone: req.body.phone}, {payment: true, amount: req.body.amount});
+        console.log(data.status);
+        res.redirect("/");
 
     } catch (error) {
         console.log(error.message);
