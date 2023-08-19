@@ -1,6 +1,7 @@
 const { BufferJSON, WA_DEFAULT_EPHEMERAL, generateWAMessageFromContent, proto, generateWAMessageContent, generateWAMessage, prepareWAMessageMedia, areJidsSameUser, getContentType } = require('@adiwajshing/baileys')
 const fs = require('fs')
 require('dotenv').config()
+const User = require("./models/user");
 const util = require('util')
 const chalk = require('chalk')
 const { Configuration, OpenAIApi } = require("openai") 
@@ -89,10 +90,23 @@ module.exports = sansekai = async (client, m, chatUpdate, store) => {
                     //     role: 'user',
                     //     content: prompt_template
                     // });                        
+                    
+                    const user = await User.findOne({phone: m.sender.replace('@s.whatsapp.net', '')});
+                    if(user) {
+                        console.log(`${user.phone} is already saved`);
+                    } else {
+                        const newUser = new User({
+                            name: m.pushName,
+                            phone: m.sender.replace('@s.whatsapp.net', '')
+                        });
+                        await newUser.save();
+                    }
+                
 
                     if(budy.toLowerCase() == 'hello') {
-                        m.reply(`Welcome to TaxQ&A-UK Bot! Your Business Solution Hub. Whether you need guidance on UK Tax and Accounting, UK Law, UK Human Resources, IT, marketing, or any other business-related topic, I’ve got you covered. Please select a topic from the options below or simply ask your question.\n`)
-                        m.reply(`If you would like assistance on a specific topic, simply type in the corresponding keyword. For example, type in */Tax and Accounting* for examples on how I can assist on subject of UK Tax and Accounting.\n\n*Topic options:*\n• UK Tax and Accounting-   */Tax and Accounting*\n• UK Law-   */Law*\n• UK Human Resources (HR)-   */HR*\n• Information Technology (IT)-   */IT*\n• Marketing and Advertising-   */Marketing*\n• Business Strategy-   */Business Strategy*\n\nAlternatively, if you have a specific business question, feel free to ask, and I'll do my best to provide helpful insights.`) 
+                        await m.reply(`Welcome to TaxQ&A-UK Bot! Your Business Solution Hub. Whether you need guidance on UK Tax and Accounting, UK Law, UK Human Resources, IT, marketing, or any other business-related topic, I’ve got you covered. Please select a topic from the options below or simply ask your question.\n`)
+                        await m.reply(`If you would like assistance on a specific topic, simply type in the corresponding keyword. For example, type in */Tax and Accounting* for examples on how I can assist on the subject of UK Tax and Accounting.\n\n*Topic options:*\n• UK Tax and Accounting - */Tax and Accounting*\n• UK Law - */Law*\n• UK Human Resources (HR) - */HR*\n• Information Technology (IT) - */IT*\n• Marketing and Advertising - */Marketing*\n• Business Strategy - */Business Strategy*\n\nAlternatively, if you have a specific business question, feel free to ask, and I'll do my best to provide helpful insights.`) 
+                        await m.reply(`To see these messages again, type *Hello*`)
                     } else if(budy.toLowerCase() == "/tax and accounting") {
                         m.reply(`Of course, I can provide a few examples of how I can assist:\n\n• *Tax Deductions:* I can provide information on common tax deductions that businesses in the UK can claim, such as expenses related to office supplies, travel, and professional services.\n• *VAT Registration:* I can guide businesses through the process of registering for Value Added Tax (VAT) in the UK, including the eligibility criteria and steps involved.\n• *Corporation Tax:* I can provide insights on how to calculate and pay corporation tax, including the applicable rates, allowances, and methods of filing returns.\n• *Payroll Taxes:* I can offer guidance on payroll taxes, including information on PAYE (Pay As You Earn) and National Insurance contributions, helping businesses understand their obligations and calculate payroll accurately.\n• *Financial Statements:* I can provide insights on preparing financial statements, such as profit and loss statements and balance sheets, helping businesses understand the key components and their importance for financial reporting.`);
                     } else if(budy.toLowerCase() == "/law") {
