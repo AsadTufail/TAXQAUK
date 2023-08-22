@@ -4,6 +4,7 @@ require('dotenv').config()
 const User = require("./models/user");
 const util = require('util')
 const chalk = require('chalk')
+const cron = require('node-cron');
 const { Configuration, OpenAIApi } = require("openai") 
 const BOT_NAME = process.env.BOT_NAME ?? "OpenAI";
  
@@ -74,13 +75,13 @@ module.exports = sansekai = async (client, m, chatUpdate, store) => {
                     const openai = new OpenAIApi(configuration);
 
                     let prompt_template =
-                        "Answer the following question, specially related to UK law or HR and also use your own knowledge when necessary " +
+                        "Answer the following question, specially related to UK Tax and Accounting, Law, HR, IT, and Marketing and also use your own knowledge when necessary " +
                         BOT_NAME +
                         " developed by TaxQ&AUK.\n\nHuman: hi\n" +
                         BOT_NAME +
-                        ": Hello! How can I assist you today? If you have any questions related to UK law or HR, feel free to ask.\n\nHuman: hello\n" +
+                        ": Hello! How can I assist you today? If you have any questions related to UK Tax and Accounting, Law, HR, IT, and Marketing, feel free to ask.\n\nHuman: hello\n" +
                         BOT_NAME +
-                        ": Hello! How can I assist you today? If you have any questions related to UK law or HR, feel free to ask.\nHuman: " +
+                        ": Hello! How can I assist you today? If you have any questions related to UK Tax and Accounting, Law, HR, IT, and Marketing, feel free to ask.\nHuman: " +
                         budy +
                         "\n" +
                         BOT_NAME +
@@ -93,15 +94,30 @@ module.exports = sansekai = async (client, m, chatUpdate, store) => {
                     
                     const user = await User.findOne({phone: m.sender.replace('@s.whatsapp.net', '')});
                     if(user) {
-                        console.log(`${user.phone} is already saved`);
+                        if(user.trial == false && user.payment == false) {
+                            throw new Error("Your 48 hours Trial Period has ended. To continue asking the questions you can subscribe it from here: https://taxqa-uk.com/#pricing");
+                        } 
                     } else {
                         const newUser = new User({
                             name: m.pushName,
-                            phone: m.sender.replace('@s.whatsapp.net', '')
+                            phone: m.sender.replace('@s.whatsapp.net', ''),
+                            trial: true
                         });
                         await newUser.save();
+                        // Get the current date and time
+                        const now = new Date();
+
+                        // Calculate the next run time, 48 hours from now
+                        const nextRunTime = new Date(now.getTime() + 48 * 60 * 60 * 1000);
+
+                        // Format the next run time for cron
+                        const cronPattern = `${nextRunTime.getMinutes()} ${nextRunTime.getHours()} ${nextRunTime.getDate()} ${nextRunTime.getMonth() + 1} *`;
+
+                        cron.schedule(cronPattern, async () => { 
+                            const user = await User.findOneAndUpdate({phone: m.sender.replace('@s.whatsapp.net', '')}, {trial: false});
+                            console.log("Trail ended")
+                        })
                     }
-                
 
                     if(budy.toLowerCase() == 'hello') {
                         await m.reply(`Welcome to TaxQ&A-UK Bot! Your Business Solution Hub. Whether you need guidance on UK Tax and Accounting, UK Law, UK Human Resources, IT, marketing, or any other business-related topic, I’ve got you covered. Please select a topic from the options below or simply ask your question.\n`)
@@ -141,7 +157,7 @@ module.exports = sansekai = async (client, m, chatUpdate, store) => {
 
                 } catch (err) {
                     console.log(err.message)
-                    m.reply("I am getting API Update right now. Please hold on, I'll be back in a while.")
+                    m.reply(err.message)
                 }
             }
         }

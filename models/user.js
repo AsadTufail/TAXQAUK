@@ -13,6 +13,10 @@ const userSchema = new mongoose.Schema(
             type: Boolean,
             default: false
         },
+        trial: {
+            type: Boolean,
+            default: true
+        },
         amount: {
             type: String
         }
